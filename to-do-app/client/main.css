@@ -1,1 +1,8 @@
 /* CSS declarations go here */
+.list-group {
+    max-height: 329px;
+    overflow: auto;
+}
+.navbar-text {
+    list-style: none;
+}
