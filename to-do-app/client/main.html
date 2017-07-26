@@ -27,10 +27,10 @@
         <div class="list-group">
           {{#each projects}}
             <li class="list-group-item list-group-item" id="{{_id}}">
-              {{title}}
-                  <button type="button" class="js-delete-project btn btn-default btn-xs pull-right">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                  </button>
+              {{> editableText collection="projects" field="title"}}
+              <button type="button" class="js-delete-project btn btn-default btn-xs pull-right">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </button>
             </li>
           {{/each}}
         </div>
