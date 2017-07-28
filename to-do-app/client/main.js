@@ -1,6 +1,25 @@
-Template.projectList.helpers({projects: Projects.find()});
-Template.taskList.helpers({tasks: Tasks.find()});
+////////////////////
+//////ROUTER////////
+////////////////////
 
+Router.configure({
+  layoutTemplate: "ApplicationLayout"
+});
+
+Router.route('/', function () {
+  this.render('navbar', {to: "navbar"});
+  this.render('projectList', {to: "projects"});
+});
+
+Router.route('/tasks', function () {
+  this.render('navbar', {to: "navbar"});
+  this.render('projectList', {to: "projects"});
+  this.render('taskList', {to: "tasks"});
+});
+
+////////////////////
+//////EVENTS////////
+////////////////////
 Template.projectList.events({
   'click .js-add-project'(event) {
     // adds new project to the collection
@@ -20,7 +39,9 @@ Template.projectList.events({
   },
   'click .js-select-project'(event) {
     // selects the project
-    console.log('selected '+this._id);
+    Session.set("project_id",this._id);
+    Session.set("project_selected",true);
+    console.log(Session.get("project_id"));
   }
 });
 
@@ -28,7 +49,8 @@ Template.taskList.events({
     'click .js-add-task'(event) {
     //adds new task to the collection
     Tasks.insert({
-      title: "New task"
+      title: "New task",
+      project: Session.get("project_id")
     });
   },
   'click .js-delete-task'(event) {
@@ -37,8 +59,29 @@ Template.taskList.events({
     $("#"+task_id).fadeOut("slow", function(){
       Tasks.remove({"_id":task_id});
     })
+  },
+  'click .js-select-task'(event) {
+    // selects the project
+    console.log(this.project);
   }
 })
+
+////////////////////
+//////HELPERS///////
+////////////////////
+
+Template.projectList.helpers({
+  projects: Projects.find()
+});
+
+Template.taskList.helpers({
+  tasks: function(){
+    if(Session.get("project_id")){
+      return Tasks.find({project: Session.get("project_id")})
+    }
+  }
+});
+
 
 //animation of adding projects
 Template.projectList.rendered = function() {
