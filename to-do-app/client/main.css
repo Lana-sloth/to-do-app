@@ -10,7 +10,7 @@
     width: 85%;
 }
 
-.js-delete-project{
+.js-delete-project, .js-delete-task {
     border: 0;
     color: #cccccc;
     margin-right: -5px;

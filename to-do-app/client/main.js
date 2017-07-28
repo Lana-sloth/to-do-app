@@ -1,23 +1,46 @@
 Template.projectList.helpers({projects: Projects.find()});
+Template.taskList.helpers({tasks: Tasks.find()});
 
 Template.projectList.events({
   'click .js-add-project'(event) {
     // adds new project to the collection
     Projects.insert({
       title: "New project",
-      totalTasks: 0,
-      completedTasks: 0
+      totalTasks: 10,
+      finishedTasks: 3,
+      unfinishedTasks: 10 - 3
     });
   },
   'click .js-delete-project'(event) {
-    // adds new project to the collection
+    // deletes the project from the collection
     var project_id = this._id;
     $("#"+project_id).fadeOut("slow", function(){
       Projects.remove({"_id":project_id});
     })
+  },
+  'click .js-select-project'(event) {
+    // selects the project
+    console.log('selected '+this._id);
   }
 });
 
+Template.taskList.events({
+    'click .js-add-task'(event) {
+    //adds new task to the collection
+    Tasks.insert({
+      title: "New task"
+    });
+  },
+  'click .js-delete-task'(event) {
+    // deletes the project from the collection
+    var task_id = this._id;
+    $("#"+task_id).fadeOut("slow", function(){
+      Tasks.remove({"_id":task_id});
+    })
+  }
+})
+
+//animation of adding projects
 Template.projectList.rendered = function() {
     AnimatedEach.attachHooks(this.find(".list-group"));
 };

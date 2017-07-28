@@ -19,34 +19,60 @@
 </template>
 
 <template name="projectList">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="well task-card">
-        <a href="#"><h2>Projects</h2></a>
-        {{> highchartsHelper chartId="test" chartWidth="100px" charHeight="100px" chartObject=topGenresChart}}
-        <br>
-        <div class="list-group">
-          {{#each projects}}
-            <li class="list-group-item list-group-item" id="{{_id}}">
-              {{> editableText collection="projects" field="title"}}
-              <button type="button" class="js-delete-project btn btn-default btn-xs pull-right">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-              </button>
-            </li>
-          {{/each}}
-        </div>
-        <div class="text-right">
-          <button type="button" class="js-add-project btn btn-primary btn-sm"> 
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a project
-          </button>
-        </div>
-      </div> <!-- end of the well div-->
-    </div> <!-- end of the column div-->
-  </div> <!-- end of the row div-->
+  <div class="col-md-3">
+    <div class="well task-card">
+      <a href="#"><h2>Projects</h2></a>
+      {{> highchartsHelper chartId="test" chartWidth="100px" charHeight="100px" chartObject=topGenresChart}}
+      <br>
+      <div class="list-group">
+        {{#each projects}}
+          <li class="js-select-project list-group-item list-group-item" id="{{_id}}">
+            {{> editableText collection="projects" field="title"}}
+            <button type="button" class="js-delete-project btn btn-default btn-xs pull-right">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+            <br>{{finishedTasks}}/{{totalTasks}}/{{unfinishedTasks}}
+          </li>
+        {{/each}}
+      </div>
+      <div class="text-right">
+        <button type="button" class="js-add-project btn btn-primary btn-sm"> 
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a project
+        </button>
+      </div>
+    </div> <!-- end of the well div-->
+  </div> <!-- end of the column div-->
+</template>
+
+<template name="taskList">
+  <div class="col-md-3">
+    <div class="well task-card">
+      <a href="#"><h2>Tasks</h2></a>
+      <br>
+      <div class="list-group">
+        {{#each tasks}}
+          <li class="list-group-item list-group-item" id="{{_id}}">
+            {{> editableText collection="tasks" field="title"}}
+            <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+          </li>
+        {{/each}}
+      </div>
+      <div class="text-right">
+        <button type="button" class="js-add-task btn btn-primary btn-sm"> 
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a task
+        </button>
+      </div>
+    </div> <!-- end of the well div-->
+  </div> <!-- end of the column div-->
 </template>
 
 <template name="main">
   <div class="container">
-    {{> projectList}}
+    <div class="row">
+      {{> projectList}}
+      {{> taskList}}
+    </div>
   </div> <!-- end of the container div-->
 </template>
