@@ -23,6 +23,7 @@
     <div class="col-md-3">
       <div class="well task-card">
         <a href="#"><h2>Projects</h2></a>
+        {{> highchartsHelper chartId="test" chartWidth="100px" charHeight="100px" chartObject=topGenresChart}}
         <br>
         <div class="list-group">
           {{#each projects}}
