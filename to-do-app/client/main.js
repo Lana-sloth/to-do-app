@@ -105,6 +105,11 @@ Template.taskList.helpers({
     if(Session.get("project_id")){
       return Tasks.find({project: Session.get("project_id")})
     }
+  },
+  projectSelected: function(){
+    if(Session.get("project_id")){
+      return true
+    }
   }
 });
 

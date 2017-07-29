@@ -73,6 +73,7 @@
 </template>
 
 <template name="taskList">
+  {{# if projectSelected}}
   <div class="col-md-3">
     <div class="well task-card">
       <a href="#"><h2>{{> taskHeader}}</h2></a>
@@ -95,4 +96,5 @@
       </div>
     </div> <!-- end of the well div-->
   </div> <!-- end of the column div-->
+  {{/if}}
 </template>
