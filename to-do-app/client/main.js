@@ -30,7 +30,10 @@ Template.projectList.events({
       finishedTasks: 3,
       unfinishedTasks: 10 - 3
     });
-  },
+  }
+});
+
+Template.project.events({
   'click .js-delete-project'(event) {
     // deletes the project from the collection
     var project_id = this._id;
@@ -41,6 +44,9 @@ Template.projectList.events({
   'click .js-select-project'(event) {
     // selects the project
     Session.set("project_id",this._id);
+    $(".js-select-project").removeClass('active');
+    var selected = event.currentTarget.id
+    $("#" + selected).addClass('active');
     console.log(Session.get("project_id"));
   }
 });
@@ -71,9 +77,19 @@ Template.taskList.events({
 ////////////////////
 //////HELPERS///////
 ////////////////////
+Template.taskHeader.helpers({
+  title: function(){
+    if(Session.get("project_id")){
+      return Projects.findOne({_id:Session.get("project_id")}).title
+    }
+  }
+})
 
 Template.projectList.helpers({
-  projects: Projects.find(),
+  projects: Projects.find()
+});
+
+Template.project.helpers({
   totalTasks: function(){
     if(!Session.get("allTasksCount")) {
       return Tasks.find().count()
