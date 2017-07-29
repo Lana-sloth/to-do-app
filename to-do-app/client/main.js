@@ -26,6 +26,7 @@ Template.projectList.events({
     // adds new project to the collection
     Projects.insert({
       title: "New project",
+      owner: Meteor.user()._id,
       totalTasks: Session.get("allTasksCount"),
       finishedTasks: 3,
       unfinishedTasks: 10 - 3
@@ -86,7 +87,11 @@ Template.taskHeader.helpers({
 })
 
 Template.projectList.helpers({
-  projects: Projects.find()
+  projects: function(){
+    return Projects.find({
+      owner: Meteor.user()._id
+    })
+  }
 });
 
 Template.project.helpers({
@@ -103,7 +108,9 @@ Template.project.helpers({
 Template.taskList.helpers({
   tasks: function(){
     if(Session.get("project_id")){
-      return Tasks.find({project: Session.get("project_id")})
+      return Tasks.find({
+        project: Session.get("project_id")
+      })
     }
   },
   projectSelected: function(){

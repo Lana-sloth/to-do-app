@@ -22,8 +22,10 @@
 <template name="main">
   <div class="container">
     <div class="row">
-      {{> projectList}}
-      {{> taskList}}
+      {{# if currentUser}}
+        {{> projectList}}
+        {{> taskList}}
+      {{/if}}
     </div>
   </div>
 </template>
@@ -80,13 +82,7 @@
       <br>
       <div class="list-group">
         {{#each tasks}}
-          <a href="#" class="js-select-task list-group-item" id="{{_id}}">
-            <input type="checkbox" class="js-tog-finished">
-            {{> editableText collection="tasks" field="title"}}
-            <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
-              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            </button>
-          </a>
+          {{> task}}
         {{/each}}
       </div>
       <div class="text-right">
@@ -97,4 +93,14 @@
     </div> <!-- end of the well div-->
   </div> <!-- end of the column div-->
   {{/if}}
+</template>
+
+<template name="task">
+  <a href="#" class="js-select-task list-group-item" id="{{_id}}">
+    <input type="checkbox" class="js-tog-finished">
+    {{> editableText collection="tasks" field="title"}}
+    <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </button>
+  </a>
 </template>
