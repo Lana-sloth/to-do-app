@@ -2,20 +2,20 @@
 //////ROUTER////////
 ////////////////////
 
-Router.configure({
-  layoutTemplate: "ApplicationLayout"
-});
+// Router.configure({
+//   layoutTemplate: "ApplicationLayout"
+// });
 
-Router.route('/', function () {
-  this.render('navbar', {to: "navbar"});
-  this.render('projectList', {to: "projects"});
-});
+// Router.route('/', function () {
+//   this.render('navbar', {to: "navbar"});
+//   this.render('projectList', {to: "projects"});
+// });
 
-Router.route('/tasks', function () {
-  this.render('navbar', {to: "navbar"});
-  this.render('projectList', {to: "projects"});
-  this.render('taskList', {to: "tasks"});
-});
+// Router.route('/tasks', function () {
+//   this.render('navbar', {to: "navbar"});
+//   this.render('projectList', {to: "projects"});
+//   this.render('taskList', {to: "tasks"});
+// });
 
 ////////////////////
 //////EVENTS////////
