@@ -6,8 +6,16 @@
 .navbar-text {
     list-style: none;
 }
-.wide-text-edit{
+.wide-text-edit {
     width: 85%;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 5px !important;
+}
+
+.finished {
+    text-decoration: overline;
 }
 
 .js-delete-project, .js-delete-task {

@@ -1,3 +1,4 @@
+
 ////////////////////
 //////ROUTER////////
 ////////////////////
@@ -25,7 +26,7 @@ Template.projectList.events({
     // adds new project to the collection
     Projects.insert({
       title: "New project",
-      totalTasks: 10,
+      totalTasks: Session.get("allTasksCount"),
       finishedTasks: 3,
       unfinishedTasks: 10 - 3
     });
@@ -40,7 +41,6 @@ Template.projectList.events({
   'click .js-select-project'(event) {
     // selects the project
     Session.set("project_id",this._id);
-    Session.set("project_selected",true);
     console.log(Session.get("project_id"));
   }
 });
@@ -50,8 +50,10 @@ Template.taskList.events({
     //adds new task to the collection
     Tasks.insert({
       title: "New task",
+      status: "unfinished",
       project: Session.get("project_id")
     });
+    Session.set("allTasksCount", Tasks.find().count());
   },
   'click .js-delete-task'(event) {
     // deletes the project from the collection
@@ -71,7 +73,15 @@ Template.taskList.events({
 ////////////////////
 
 Template.projectList.helpers({
-  projects: Projects.find()
+  projects: Projects.find(),
+  totalTasks: function(){
+    if(!Session.get("allTasksCount")) {
+      return Tasks.find().count()
+    }
+    else{
+      return Session.get("allTasksCount")
+    }
+  }
 });
 
 Template.taskList.helpers({

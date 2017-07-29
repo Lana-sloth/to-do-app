@@ -72,6 +72,7 @@
       <div class="list-group">
         {{#each tasks}}
           <a href="#" class="js-select-task list-group-item" id="{{_id}}">
+            <input type="checkbox" class="js-tog-finished">
             {{> editableText collection="tasks" field="title"}}
             <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
               <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
