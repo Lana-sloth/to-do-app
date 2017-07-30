@@ -63,10 +63,10 @@
 <template name="project">
   <a href="#" class="js-select-project list-group-item" id="{{_id}}">
     {{> editableText collection="projects" field="title"}}
-    <button type="button" class="js-delete-project btn btn-default btn-xs pull-right">
+    <button id="{{_id}}" type="button" class="js-delete-project btn btn-default btn-xs pull-right">
       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
     </button>
-    <br>{{finishedTasks}}/{{totalTasks}}/{{unfinishedTasks}}
+    <br>{{totalTasks}}
   </a>
 </template>
 

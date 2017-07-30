@@ -24,23 +24,15 @@
 Template.projectList.events({
   'click .js-add-project'(event) {
     // adds new project to the collection
-    Projects.insert({
-      title: "New project",
-      owner: Meteor.user()._id,
-      totalTasks: Session.get("allTasksCount"),
-      finishedTasks: 3,
-      unfinishedTasks: 10 - 3
-    });
+    Meteor.call("insertProject");
   }
 });
 
 Template.project.events({
   'click .js-delete-project'(event) {
     // deletes the project from the collection
-    var project_id = this._id;
-    $("#"+project_id).fadeOut("slow", function(){
-      Projects.remove({"_id":project_id});
-    })
+    Session.set("project_id",this._id);
+    Meteor.call("deleteProject", Session.get("project_id"));
   },
   'click .js-select-project'(event) {
     // selects the project
@@ -55,19 +47,14 @@ Template.project.events({
 Template.taskList.events({
     'click .js-add-task'(event) {
     //adds new task to the collection
-    Tasks.insert({
-      title: "New task",
-      status: "unfinished",
-      project: Session.get("project_id")
-    });
     Session.set("allTasksCount", Tasks.find().count());
+    Meteor.call("insertTask", Session.get("project_id"));
   },
   'click .js-delete-task'(event) {
     // deletes the project from the collection
     var task_id = this._id;
-    $("#"+task_id).fadeOut("slow", function(){
-      Tasks.remove({"_id":task_id});
-    })
+    Session.set("allTasksCount", Tasks.find().count());
+    Meteor.call("deleteTask", task_id);
   },
   'click .js-select-task'(event) {
     // selects the project
@@ -80,11 +67,11 @@ Template.taskList.events({
 ////////////////////
 Template.taskHeader.helpers({
   title: function(){
-    if(Session.get("project_id")){
-      return Projects.findOne({_id:Session.get("project_id")}).title
-    }
+    // if(Session.get("project_id")){
+    //   return Projects.findOne({_id:Session.get("project_id")}).title
+    // }
   }
-})
+});
 
 Template.projectList.helpers({
   projects: function(){
