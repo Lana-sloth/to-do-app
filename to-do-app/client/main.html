@@ -97,10 +97,14 @@
 
 <template name="task">
   <a href="#" class="js-select-task list-group-item" id="{{_id}}">
-    <input type="checkbox" class="js-tog-finished">
-    {{> editableText collection="tasks" field="title"}}
-    <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
-      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-    </button>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" class="js-tog-status" checked="{{isFinished}}">
+        {{> editableText collection="tasks" field="title"}}
+        <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+      </label>
+    </div>
   </a>
 </template>

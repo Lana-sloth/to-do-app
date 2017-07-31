@@ -55,8 +55,11 @@ Template.taskList.events({
     Meteor.call("deleteTask", task_id);
   },
   'click .js-select-task'(event) {
-    // selects the project
-    console.log(this.project);
+    // selects the task
+  },
+  'click .js-tog-status'(event) {
+    Session.set("taskIsFinished", event.target.checked);
+    Meteor.call("changeTaskStatus", this, Session.get("taskIsFinished"));
   }
 })
 
@@ -99,6 +102,13 @@ Template.taskList.helpers({
     }
   }
 });
+
+//checks if checkbox has the same status as the task
+Template.task.rendered = function() {
+  //var task_id = $( ":a" );
+  //console.log($( "a" ));
+  //console.log($( ":checkbox" )[0].checked);
+}
 
 
 //animation of adding projects
