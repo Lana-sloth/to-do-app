@@ -24,7 +24,9 @@
     <div class="row">
       {{# if currentUser}}
         {{> projectList}}
-        {{> taskList}}
+        {{# if projectSelected}}
+          {{> taskList}}
+        {{/if}}
       {{/if}}
     </div>
   </div>
@@ -41,7 +43,7 @@
 </template>
 
 <template name="projectList">
-  <div class="col-md-3">
+  <div class="col-md-4">
     <div class="well task-card">
       <a href="#"><h2>Projects</h2></a>
       {{> highchartsHelper chartId="test" chartWidth="100px" charHeight="100px" chartObject=topGenresChart}}
@@ -63,10 +65,10 @@
 <template name="project">
   <a href="#" class="js-select-project list-group-item" id="{{_id}}">
     {{> editableText collection="projects" field="title"}}
-    <button id="{{_id}}" type="button" class="js-delete-project btn btn-default btn-xs pull-right">
+    <button id="{{project_id}}" type="button" class="js-delete-project btn btn-default btn-xs pull-right">
       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
     </button>
-    <br>{{finishedTasks}}/{{projectTasks}}
+    <br>{{totalTasks}}/{{finishedTasks}}/{{projectTasks}}
   </a>
 </template>
 
@@ -75,8 +77,7 @@
 </template>
 
 <template name="taskList">
-  {{# if projectSelected}}
-  <div class="col-md-3">
+  <div class="col-md-4">
     <div class="well task-card">
       <a href="#"><h2>{{> taskHeader}}</h2></a>
       <br>
@@ -92,7 +93,6 @@
       </div>
     </div> <!-- end of the well div-->
   </div> <!-- end of the column div-->
-  {{/if}}
 </template>
 
 <template name="task">

@@ -32,7 +32,9 @@ Template.project.events({
   'click .js-delete-project'(event) {
     // deletes the project from the collection
     Session.set("project_id",this._id);
-    Meteor.call("deleteProject", Session.get("project_id"));
+    var project_id = Session.get("project_id");
+    Session.set("project_id",false);
+    Meteor.call("deleteProject", project_id);
   },
   'click .js-select-project'(event) {
     // selects the project
@@ -45,7 +47,7 @@ Template.project.events({
 });
 
 Template.taskList.events({
-    'click .js-add-task'(event) {
+  'click .js-add-task'(event) {
     //adds new task to the collection
     Meteor.call("insertTask", Session.get("project_id"));
   },
@@ -68,9 +70,25 @@ Template.taskList.events({
 ////////////////////
 Template.taskHeader.helpers({
   title: function(){
-    // if(Session.get("project_id")){
-    //   return Projects.findOne({_id:Session.get("project_id")}).title
-    // }
+    var project = Projects.findOne({_id: Session.get("project_id")});
+    if(project){
+      return project.title;
+    }
+    else {
+      return "";
+    }
+  }
+});
+
+Template.main.helpers({
+  projectSelected: function(){
+    var project = Projects.findOne({_id: Session.get("project_id")});
+    if(project){
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 });
 
@@ -101,21 +119,12 @@ Template.taskList.helpers({
         project: Session.get("project_id")
       })
     }
-  },
-  projectSelected: function(){
-    if(Session.get("project_id")){
-      return true
-    }
   }
 });
 
-//checks if checkbox has the same status as the task
-Template.task.rendered = function() {
-  //var task_id = $( ":a" );
-  //console.log($( "a" ));
-  //console.log($( ":checkbox" )[0].checked);
+Template.main.rendered = function() {
+  Session.set("project_id", false);
 }
-
 
 //animation of adding projects
 Template.projectList.rendered = function() {

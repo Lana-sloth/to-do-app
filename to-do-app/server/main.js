@@ -32,6 +32,5 @@ Meteor.methods({
     var updatedTask = Tasks.findOne({_id: task._id});
     updatedTask.isFinished = taskStatus;
     Tasks.update({_id: task._id}, updatedTask);
-    console.log(updatedTask.isFinished);
   }
 })
