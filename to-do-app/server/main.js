@@ -17,6 +17,7 @@ Meteor.methods({
   deleteProject: function(project_id) {
     // deletes the project from the collection
     Projects.remove({_id: project_id});
+    Tasks.remove({project: project_id});
   },
   insertTask: function(project_id){
     // adds the task to the collection
