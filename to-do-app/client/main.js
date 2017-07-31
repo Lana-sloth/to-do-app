@@ -47,13 +47,11 @@ Template.project.events({
 Template.taskList.events({
     'click .js-add-task'(event) {
     //adds new task to the collection
-    Session.set("allTasksCount", Tasks.find().count());
     Meteor.call("insertTask", Session.get("project_id"));
   },
   'click .js-delete-task'(event) {
     // deletes the project from the collection
     var task_id = this._id;
-    Session.set("allTasksCount", Tasks.find().count());
     Meteor.call("deleteTask", task_id);
   },
   'click .js-select-task'(event) {
@@ -83,12 +81,7 @@ Template.projectList.helpers({
 
 Template.project.helpers({
   totalTasks: function(){
-    if(!Session.get("allTasksCount")) {
       return Tasks.find().count()
-    }
-    else{
-      return Session.get("allTasksCount")
-    }
   }
 });
 
