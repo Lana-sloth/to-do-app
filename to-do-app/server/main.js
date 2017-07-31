@@ -8,10 +8,7 @@ Meteor.methods({
     // adds the project to the collection
     Projects.insert({
       title: "New project",
-      owner: Meteor.user()._id,
-      totalTasks: Tasks.find().count(),
-      finishedTasks: 3,
-      unfinishedTasks: 10 - 3
+      owner: Meteor.user()._id
     });
   },
   deleteProject: function(project_id) {

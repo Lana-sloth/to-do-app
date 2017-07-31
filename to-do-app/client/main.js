@@ -84,7 +84,13 @@ Template.projectList.helpers({
 
 Template.project.helpers({
   totalTasks: function(){
-      return Tasks.find().count()
+    return Tasks.find().count()
+  },
+  projectTasks: function(){
+    return Tasks.find({project: this._id}).count()
+  },
+  finishedTasks: function(){
+    return Tasks.find({project: this._id, isFinished: true}).count()
   }
 });
 
