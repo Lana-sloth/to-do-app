@@ -17,11 +17,20 @@
         {{# if projectSelected}}
           {{> taskList}}
         {{/if}}
+      {{else}}
+        {{> anon}}
       {{/if}}
     </div>
   </div>
 </template>
 
+<template name="anon">
+  <div class="jumbotron text-center">
+    <h1>Hello!</h1>
+    <p>Please sign in first</p>
+    <a class="btn btn-primary btn-lg signIn" href="#" role="button">{{> loginButtons}}</a>
+  </div>
+</template>
 
 <template name="navbar">
   <nav class="navbar navbar-default">

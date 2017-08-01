@@ -1,4 +1,9 @@
 /* CSS declarations go here */
+.signIn li, .signIn a {
+    color: #ffffff !important;
+    list-style: none;
+}
+
 .list-group {
     max-height: 329px;
     overflow: auto;
