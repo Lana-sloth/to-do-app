@@ -109,6 +109,18 @@ Template.project.helpers({
   },
   finishedTasks: function(){
     return Tasks.find({project: this._id, isFinished: true}).count()
+  },
+  progressTask: function(){
+    var total, finished, progress;
+    total = Tasks.find({project: this._id}).count();
+    finished = Tasks.find({project: this._id, isFinished: true}).count();
+    progress = 100/total*finished;
+    if(progress){
+      return progress;
+    }
+    else {
+      return 0;
+    }
   }
 });
 
@@ -128,11 +140,11 @@ Template.main.rendered = function() {
 
 //animation of adding projects
 Template.projectList.rendered = function() {
-    AnimatedEach.attachHooks(this.find(".list-group"));
+  AnimatedEach.attachHooks(this.find(".list-group"));
 };
 
 //chart in projectList template
-Template.projectList.helpers({
+Template.chart.helpers({
   topGenresChart: function() {
     return {
         chart: {

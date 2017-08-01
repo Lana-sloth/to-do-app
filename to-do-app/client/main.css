@@ -11,6 +11,10 @@
     margin-right: 5px;
 }
 
+ .progress {
+    height: 10px;
+} 
+
 .editable-text {
     margin-right: 5px;
 }
@@ -22,7 +26,7 @@
 .js-delete-project, .js-delete-task {
     border: 0;
     color: #cccccc;
-    margin-right: -5px;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar {

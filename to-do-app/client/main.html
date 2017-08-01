@@ -1,5 +1,6 @@
 <head>
   <title>to-do-app</title>
+
 </head>
 
 <body>
@@ -42,11 +43,15 @@
   </nav>
 </template>
 
+<template name="chart">
+  {{> highchartsHelper chartId="chartId" chartWidth="100%" charHeight="100%" chartObject=topGenresChart}}
+  {{> highchartsHelper chartId="id" chartWidth="100%" charHeight="100%" chartObject=topGenresChart}}
+</template>
+
 <template name="projectList">
   <div class="col-md-4">
     <div class="well task-card">
       <a href="#"><h2>Projects</h2></a>
-      {{> highchartsHelper chartId="test" chartWidth="100px" charHeight="100px" chartObject=topGenresChart}}
       <br>
       <div class="list-group">
         {{#each projects}}
@@ -68,7 +73,11 @@
     <button id="{{project_id}}" type="button" class="js-delete-project btn btn-default btn-xs pull-right">
       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
     </button>
-    <br>{{totalTasks}}/{{finishedTasks}}/{{projectTasks}}
+    <br><br>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style = "width: {{progressTask}}%;">
+      </div>
+    </div>
   </a>
 </template>
 
