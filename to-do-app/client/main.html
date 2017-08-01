@@ -51,7 +51,7 @@
 <template name="projectList">
   <div class="col-md-4">
     <div class="well task-card">
-      <a href="#"><h2>Projects</h2></a>
+      <h2>Projects</h2>
       <br>
       <div class="list-group">
         {{#each projects}}
@@ -82,13 +82,13 @@
 </template>
 
 <template name="taskHeader">
-  Tasks of "{{title}}" project
+  Tasks of project:<h2>{{title}}</h2>
 </template>
 
 <template name="taskList">
   <div class="col-md-4">
     <div class="well task-card">
-      <a href="#"><h2>{{> taskHeader}}</h2></a>
+      {{> taskHeader}}
       <br>
       <div class="list-group">
         {{#each tasks}}
