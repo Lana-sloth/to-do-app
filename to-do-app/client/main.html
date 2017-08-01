@@ -1,6 +1,5 @@
 <head>
   <title>to-do-app</title>
-
 </head>
 
 <body>
@@ -9,16 +8,6 @@
 </body>
 
 <!-- TEMPLATES -->
-
-<!-- <template name="ApplicationLayout">
-  {{> yield "navbar"}}
-  <div class="container">
-    <div class="row">
-      {{> yield "projects"}}
-      {{> yield "tasks"}}
-    </div>
-  </div>
-</template> -->
 
 <template name="main">
   <div class="container">
@@ -75,7 +64,7 @@
     </button>
     <br><br>
     <div class="progress">
-      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style = "width: {{progressTask}}%;">
+      <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style = "width: {{progressTask}}%;">
       </div>
     </div>
   </a>
@@ -110,10 +99,10 @@
       <label>
         <input type="checkbox" class="js-tog-status" checked="{{isFinished}}">
         {{> editableText collection="tasks" field="title"}}
+      </label>
         <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </button>
-      </label>
     </div>
   </a>
 </template>

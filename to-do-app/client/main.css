@@ -6,9 +6,20 @@
 .navbar-text {
     list-style: none;
 }
+
+.checkbox label {
+    width: 90% !important;
+}
+
+.checkbox .wide-text-edit {
+    width: 100%;
+}
+
 .wide-text-edit {
-    width: 85%;
+    width: 90%;
     margin-right: 5px;
+    color: #666666;
+    padding-left: 3px;
 }
 
  .progress {
