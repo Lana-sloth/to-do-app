@@ -1,5 +1,9 @@
 Meteor.subscribe("projects");
 Meteor.subscribe("tasks");
+Meteor.subscribe("steps");
+
+Session.set("project_id", false);
+Session.set("task_id", false);
 
 ////////////////////
 //////EVENTS////////
@@ -35,12 +39,17 @@ Template.taskList.events({
     Meteor.call("insertTask", Session.get("project_id"));
   },
   'click .js-delete-task'(event) {
-    // deletes the project from the collection
+    // deletes the task from the collection
     var task_id = this._id;
     Meteor.call("deleteTask", task_id);
   },
   'click .js-select-task'(event) {
     // selects the task
+    Session.set("task_id",this._id);
+    $(".js-select-task").removeClass('active');
+    var selected = event.currentTarget.id
+    $("#" + selected).addClass('active');
+    console.log(Session.get("task_id"));
   },
   'click .js-tog-status'(event) {
     Session.set("taskIsFinished", event.target.checked);
@@ -48,25 +57,43 @@ Template.taskList.events({
   }
 })
 
+Template.stepList.events({
+  'click .js-add-step'(event) {
+    //adds new step to the collection
+    Meteor.call("insertStep", Session.get("project_id"), Session.get("task_id"));
+  },
+  'click .js-delete-step'(event) {
+    // deletes the step from the collection
+    var step_id = this._id;
+    Meteor.call("deleteStep", step_id);
+  },
+  'click .js-select-step'(event) {
+    // selects the step
+  },
+  'click .js-tog-step-status'(event) {
+    Session.set("stepIsFinished", event.target.checked);
+    Meteor.call("changeStepStatus", this, Session.get("stepIsFinished"));
+  }
+})
+
 ////////////////////
 //////HELPERS///////
 ////////////////////
-Template.taskHeader.helpers({
-  title: function(){
-    var project = Projects.findOne({_id: Session.get("project_id")});
-    if(project){
-      return project.title;
-    }
-    else {
-      return "";
-    }
-  }
-});
+
 
 Template.main.helpers({
   projectSelected: function(){
     var project = Projects.findOne({_id: Session.get("project_id")});
     if(project){
+      return true;
+    }
+    else {
+      return false;
+    }
+  },
+  taskSelected: function(){
+    var task = Tasks.findOne({_id: Session.get("task_id")});
+    if(task){
       return true;
     }
     else {
@@ -107,6 +134,18 @@ Template.project.helpers({
   }
 });
 
+Template.taskHeader.helpers({
+  title: function(){
+    var project = Projects.findOne({_id: Session.get("project_id")});
+    if(project){
+      return project.title;
+    }
+    else {
+      return "";
+    }
+  }
+});
+
 Template.taskList.helpers({
   tasks: function(){
     if(Session.get("project_id")){
@@ -117,62 +156,33 @@ Template.taskList.helpers({
   }
 });
 
-Template.main.rendered = function() {
-  Session.set("project_id", false);
-}
+Template.stepHeader.helpers({
+  title: function(){
+    var task = Tasks.findOne({_id: Session.get("task_id")});
+    if(task){
+      return task.title;
+    }
+    else {
+      return "";
+    }
+  }
+});
+
+Template.stepList.helpers({
+  steps: function(){
+    if(Session.get("task_id")){
+      return Steps.find({
+        task: Session.get("task_id")
+      })
+    }
+  }
+});
+
 
 //animation of adding projects
 Template.projectList.rendered = function() {
   AnimatedEach.attachHooks(this.find(".list-group"));
 };
-
-//chart in projectList template
-Template.chart.helpers({
-  topGenresChart: function() {
-    return {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-
-            backgroundColor: null,
-
-            spacingBottom: 0,
-            spacingTop: -15,
-            spacingLeft: 0,
-            spacingRight: 0,
-            width: 80,
-            height: 80
-        },
-        title: {
-            text: ""
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: false,
-                cursor: '',
-                dataLabels: {
-                    enabled: false,
-                    format: '{point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    },
-                    connectorColor: 'silver'
-                }
-            }
-        },
-        colors: ['#337ab7','#ffffff'],
-        series: [{
-            type: 'pie',
-            name: 'tasks',
-            data: [
-                ['Done',   70],
-                ['Undone', 30]
-            ]
-        }]
-    };
-  }
-})
 
 Meteor.Spinner.options = {
     lines: 13, // The number of lines to draw

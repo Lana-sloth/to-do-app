@@ -19,6 +19,9 @@
           {{> projectList}}         <!-- shows content when user is logged in -->
           {{# if projectSelected}}
             {{> taskList}}          <!-- shows tasks for selected project -->
+            {{# if taskSelected}}
+              {{> stepList}}
+            {{/if}}
           {{/if}}
         {{else}}
           {{> anon}}                <!-- shows anon page if user is not logged in -->
@@ -42,11 +45,6 @@
       <p class="navbar-text navbar-right">{{> loginButtons}}</p>
     </div>
   </nav>
-</template>
-
-<template name="chart">
-  {{> highchartsHelper chartId="chartId" chartWidth="100%" charHeight="100%" chartObject=topGenresChart}}
-  {{> highchartsHelper chartId="id" chartWidth="100%" charHeight="100%" chartObject=topGenresChart}}
 </template>
 
 <template name="projectList">
@@ -92,6 +90,7 @@
       {{> taskHeader}}
       <br>
       <div class="list-group">
+        {{printTaskId}}
         {{#each tasks}}
           {{> task}}
         {{/each}}
@@ -113,6 +112,43 @@
         {{> editableText collection="tasks" field="title"}}
       </label>
         <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
+          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+    </div>
+  </a>
+</template>
+
+<template name="stepHeader">
+  Steps of task:<h2>{{title}}</h2>
+</template>
+
+<template name="stepList">
+  <div class="col-md-4">
+    <div class="well">
+      {{> stepHeader}}
+      <br>
+      <div class="list-group">
+         {{#each steps}}
+          {{> step}}
+        {{/each}} 
+      </div>
+      <div class="text-right">
+        <button type="button" class="js-add-step btn btn-primary btn-sm"> 
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a step
+        </button>
+      </div>
+    </div> <!-- end of the well div-->
+  </div> <!-- end of the column div-->
+</template>
+
+<template name="step">
+  <a href="#" class="js-select-step list-group-item" id="{{_id}}">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" class="js-tog-step-status" checked="{{isFinished}}">
+        {{> editableText collection="steps" field="title"}}
+      </label>
+        <button type="button" class="js-delete-step btn btn-default btn-xs pull-right">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </button>
     </div>
