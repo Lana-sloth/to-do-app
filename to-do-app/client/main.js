@@ -61,18 +61,18 @@ Template.stepList.events({
   'click .js-add-step'(event) {
     //adds new step to the collection
     Meteor.call("insertStep", Session.get("project_id"), Session.get("task_id"));
+    Meteor.call("checkTaskStatus", Session.get("task_id"));
   },
   'click .js-delete-step'(event) {
     // deletes the step from the collection
     var step_id = this._id;
     Meteor.call("deleteStep", step_id);
-  },
-  'click .js-select-step'(event) {
-    // selects the step
+    Meteor.call("checkTaskStatus", Session.get("task_id"));
   },
   'click .js-tog-step-status'(event) {
     Session.set("stepIsFinished", event.target.checked);
     Meteor.call("changeStepStatus", this, Session.get("stepIsFinished"));
+    Meteor.call("checkTaskStatus", Session.get("task_id"));
   }
 })
 
@@ -86,18 +86,14 @@ Template.main.helpers({
     if(project){
       return true;
     }
-    else {
-      return false;
-    }
+    return false;
   },
   taskSelected: function(){
     var task = Tasks.findOne({_id: Session.get("task_id")});
     if(task){
       return true;
     }
-    else {
-      return false;
-    }
+    return false;
   }
 });
 
@@ -106,14 +102,10 @@ Template.projectList.helpers({
     if(Projects.find({owner: Meteor.user()._id}).count()){
       return true;
     }
-    else {
-      return false;
-    }
+    return false;
   },
   projects: function(){
-    return Projects.find({
-      owner: Meteor.user()._id
-    })
+    return Projects.find({owner: Meteor.user()._id})
   }
 });
 
@@ -135,9 +127,7 @@ Template.project.helpers({
     if(progress){
       return progress;
     }
-    else {
-      return 0;
-    }
+    return 0;
   }
 });
 
@@ -147,9 +137,7 @@ Template.taskHeader.helpers({
     if(project){
       return project.title;
     }
-    else {
-      return "";
-    }
+    return "";
   }
 });
 
@@ -158,18 +146,14 @@ Template.taskList.helpers({
     if(Tasks.find({project: Session.get("project_id")}).count()) {
       return true;
     }
-    else {
-      return false;
-    }
+    return false;
   },
-
   //shows tasks of selected project
   tasks: function(){
     if(Session.get("project_id")){
-      return Tasks.find({
-        project: Session.get("project_id")
-      })
-    }
+      return Tasks.find({project: Session.get("project_id")},
+      //{sort: {isFinished: 1}}
+    )}
   }
 });
 
@@ -191,9 +175,7 @@ Template.task.helpers({
     if(progress){
       return progress;
     }
-    else {
-      return 0;
-    }
+    return 0;
   }
 });
 
@@ -203,9 +185,7 @@ Template.stepHeader.helpers({
     if(task){
       return task.title;
     }
-    else {
-      return "";
-    }
+    return "";
   }
 });
 
@@ -214,24 +194,21 @@ Template.stepList.helpers({
     if(Steps.find({task: Session.get("task_id")}).count()){
       return true;
     }
-    else {
-      return false;
-    }
+    return false;
   },
   steps: function(){
     if(Session.get("task_id")){
-      return Steps.find({
-        task: Session.get("task_id")
-      })
-    }
+      return Steps.find({task: Session.get("task_id")}, 
+      //{sort: {isFinished: 1}}
+    )}
   }
 });
 
 
 //animation of adding projects
-Template.projectList.rendered = function() {
-  AnimatedEach.attachHooks(this.find(".list-group"));
-};
+// Template.projectList.rendered = function() {
+//   AnimatedEach.attachHooks(this.find(".list-group"));
+// };
 
 
 Meteor.Spinner.options = {
