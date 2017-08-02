@@ -3,6 +3,14 @@ Meteor.startup(() => {
 
 });
 
+Meteor.publish("projects", function(){
+  return Projects.find({owner: Meteor.user()._id});
+})
+
+Meteor.publish("tasks", function(){
+  return Tasks.find({owner: Meteor.user()._id});
+})
+
 Meteor.methods({
   insertProject: function(){
     // adds the project to the collection
@@ -21,7 +29,8 @@ Meteor.methods({
     Tasks.insert({
       title: "New task",
       isFinished: false,
-      project: project_id
+      project: project_id,
+      owner: Meteor.user()._id
     });
   },
   deleteTask: function(task_id) {
