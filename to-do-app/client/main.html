@@ -107,10 +107,8 @@
 <template name="task">
   <a href="#" class="js-select-task list-group-item" id="{{_id}}">
     <div class="checkbox">
-      <label>
         <input type="checkbox" class="js-tog-status" checked="{{isFinished}}">
         {{> editableText collection="tasks" field="title"}}
-      </label>
         <button type="button" class="js-delete-task btn btn-default btn-xs pull-right">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </button>
@@ -148,10 +146,8 @@
 <template name="step">
   <a href="#" class="js-select-step list-group-item" id="{{_id}}">
     <div class="checkbox">
-      <label>
         <input type="checkbox" class="js-tog-step-status" checked="{{isFinished}}">
         {{> editableText collection="steps" field="title"}}
-      </label>
         <button type="button" class="js-delete-step btn btn-default btn-xs pull-right">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </button>

@@ -12,12 +12,17 @@
     list-style: none;
 }
 
-.checkbox label {
-    width: 90% !important;
+.checkbox input {
+    margin-left: 0 !important;
 }
 
-.checkbox .wide-text-edit {
-    width: 100%;
+.checkbox .wide-text-edit, .checkbox .editable-text {
+    margin-left: 20px !important;
+    width: 83%;
+}
+
+.editable-text {
+    margin-right: 5px;
 }
 
 .wide-text-edit {
@@ -31,15 +36,11 @@
     height: 10px;
 } 
 
-.editable-text {
-    margin-right: 5px;
-}
-
 .finished {
     text-decoration: overline;
 }
 
-.js-delete-project, .js-delete-task {
+.js-delete-project, .js-delete-task, .js-delete-step {
     border: 0;
     color: #cccccc;
     background-color: transparent;
