@@ -12,13 +12,17 @@
 <template name="main">
   <div class="container">
     <div class="row">
-      {{# if currentUser}}
-        {{> projectList}}
-        {{# if projectSelected}}
-          {{> taskList}}
-        {{/if}}
+      {{# if loggingIn}}
+        {{>spinner}}
       {{else}}
-        {{> anon}}
+        {{# if currentUser}}
+          {{> projectList}}
+          {{# if projectSelected}}
+            {{> taskList}}
+          {{/if}}
+        {{else}}
+          {{> anon}}
+        {{/if}}
       {{/if}}
     </div>
   </div>
@@ -28,7 +32,6 @@
   <div class="jumbotron text-center">
     <h1>Hello!</h1>
     <p>Please sign in first</p>
-    <a class="btn btn-primary btn-lg signIn" href="#" role="button">{{> loginButtons}}</a>
   </div>
 </template>
 
