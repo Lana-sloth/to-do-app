@@ -20,7 +20,7 @@
           {{# if projectSelected}}
             {{> taskList}}          <!-- shows tasks for selected project -->
             {{# if taskSelected}}
-              {{> stepList}}
+              {{> stepList}}        <!-- shows steps for selected task -->
             {{/if}}
           {{/if}}
         {{else}}
@@ -52,11 +52,15 @@
     <div class="well task-card">
       <h2>Projects</h2>
       <br>
-      <div class="list-group">
-        {{#each projects}}
-          {{> project}}
-        {{/each}}
-      </div>
+      {{# if areProjects}}
+        <div class="list-group">
+          {{#each projects}}
+            {{> project}}
+          {{/each}}
+        </div>
+      {{else}}
+        <p>There are no projects yet</p>
+      {{/if}}
       <div class="text-right">
         <button type="button" class="js-add-project btn btn-primary btn-sm"> 
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a project
@@ -89,12 +93,16 @@
     <div class="well task-card">
       {{> taskHeader}}
       <br>
-      <div class="list-group">
-        {{printTaskId}}
-        {{#each tasks}}
-          {{> task}}
-        {{/each}}
-      </div>
+      {{# if areTasks}}
+        <div class="list-group">
+          {{printTaskId}}
+          {{#each tasks}}
+            {{> task}}
+          {{/each}}
+        </div>
+      {{else}}
+        <p>There are no tasks in this project yet</p>
+      {{/if}}
       <div class="text-right">
         <button type="button" class="js-add-task btn btn-primary btn-sm"> 
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a task
@@ -131,11 +139,15 @@
     <div class="well">
       {{> stepHeader}}
       <br>
-      <div class="list-group">
-         {{#each steps}}
-          {{> step}}
-        {{/each}} 
-      </div>
+      {{# if areSteps}}
+        <div class="list-group">
+          {{#each steps}}
+            {{> step}}
+          {{/each}} 
+        </div>
+      {{else}}
+        <p>There are no steps in this task yet</p>
+      {{/if}}
       <div class="text-right">
         <button type="button" class="js-add-step btn btn-primary btn-sm"> 
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a step

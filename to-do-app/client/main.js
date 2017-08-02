@@ -102,6 +102,14 @@ Template.main.helpers({
 });
 
 Template.projectList.helpers({
+  areProjects: function() {
+    if(Projects.find({owner: Meteor.user()._id}).count()){
+      return true;
+    }
+    else {
+      return false;
+    }
+  },
   projects: function(){
     return Projects.find({
       owner: Meteor.user()._id
@@ -146,6 +154,15 @@ Template.taskHeader.helpers({
 });
 
 Template.taskList.helpers({
+  areTasks: function() {
+    if(Tasks.find({project: Session.get("project_id")}).count()) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  },
+
   //shows tasks of selected project
   tasks: function(){
     if(Session.get("project_id")){
@@ -193,6 +210,14 @@ Template.stepHeader.helpers({
 });
 
 Template.stepList.helpers({
+  areSteps: function(){
+    if(Steps.find({task: Session.get("task_id")}).count()){
+      return true;
+    }
+    else {
+      return false;
+    }
+  },
   steps: function(){
     if(Session.get("task_id")){
       return Steps.find({
