@@ -80,7 +80,6 @@ Template.stepList.events({
 //////HELPERS///////
 ////////////////////
 
-
 Template.main.helpers({
   projectSelected: function(){
     var project = Projects.findOne({_id: Session.get("project_id")});
@@ -147,11 +146,36 @@ Template.taskHeader.helpers({
 });
 
 Template.taskList.helpers({
+  //shows tasks of selected project
   tasks: function(){
     if(Session.get("project_id")){
       return Tasks.find({
         project: Session.get("project_id")
       })
+    }
+  }
+});
+
+Template.task.helpers({
+  totalSteps: function(){
+    return Steps.find().count()
+  },
+  taskSteps: function(){
+    return Steps.find({task: this._id}).count()
+  },
+  finishedSteps: function(){
+    return Steps.find({task: this._id, isFinished: true}).count()
+  },
+  progressSteps: function(){
+    var total, finished, progress;
+    total = Steps.find({task: this._id}).count();
+    finished = Steps.find({task: this._id, isFinished: true}).count();
+    progress = 100/total*finished;
+    if(progress){
+      return progress;
+    }
+    else {
+      return 0;
     }
   }
 });
@@ -183,6 +207,7 @@ Template.stepList.helpers({
 Template.projectList.rendered = function() {
   AnimatedEach.attachHooks(this.find(".list-group"));
 };
+
 
 Meteor.Spinner.options = {
     lines: 13, // The number of lines to draw

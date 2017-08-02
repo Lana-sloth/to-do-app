@@ -69,6 +69,6 @@ Meteor.methods({
   changeStepStatus: function(step, stepStatus) {
     var updatedStep = Steps.findOne({_id: step._id});
     updatedStep.isFinished = stepStatus;
-    Tasks.update({_id: step._id}, updatedStep);
+    Steps.update({_id: step._id}, updatedStep);
   }
 })
