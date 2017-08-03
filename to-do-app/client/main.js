@@ -29,7 +29,7 @@ Template.project.events({
     $(".js-select-project").removeClass('active');
     var selected = event.currentTarget.id
     $("#" + selected).addClass('active');
-    console.log(Session.get("project_id"));
+    Session.set("task_id", false);
   }
 });
 
@@ -49,7 +49,6 @@ Template.taskList.events({
     $(".js-select-task").removeClass('active');
     var selected = event.currentTarget.id
     $("#" + selected).addClass('active');
-    console.log(Session.get("task_id"));
   },
   'click .js-tog-status'(event) {
     Session.set("taskIsFinished", event.target.checked);
@@ -97,15 +96,16 @@ Template.main.helpers({
   }
 });
 
+// Template.projectList.projects = function(){
+//     return Projects.find({owner: Meteor.user()._id});
+// }
+
 Template.projectList.helpers({
-  areProjects: function() {
-    if(Projects.find({owner: Meteor.user()._id}).count()){
-      return true;
-    }
-    return false;
+  areProjects: function(){
+    return Projects.find({owner: Meteor.user()._id}).count();
   },
   projects: function(){
-    return Projects.find({owner: Meteor.user()._id})
+    return Projects.find({owner: Meteor.user()._id});
   }
 });
 
@@ -114,10 +114,10 @@ Template.project.helpers({
     return Tasks.find().count()
   },
   projectTasks: function(){
-    return Tasks.find({project: this._id}).count()
+    return Tasks.find({project: this._id}).count();
   },
   finishedTasks: function(){
-    return Tasks.find({project: this._id, isFinished: true}).count()
+    return Tasks.find({project: this._id, isFinished: true}).count();
   },
   progressTask: function(){
     var total, finished, progress;
@@ -151,7 +151,7 @@ Template.taskList.helpers({
   //shows tasks of selected project
   tasks: function(){
     if(Session.get("project_id")){
-      return Tasks.find({project: Session.get("project_id")},
+      return Tasks.find({project: Session.get("project_id")}
       //{sort: {isFinished: 1}}
     )}
   }
@@ -159,13 +159,13 @@ Template.taskList.helpers({
 
 Template.task.helpers({
   totalSteps: function(){
-    return Steps.find().count()
+    return Steps.find().count();
   },
   taskSteps: function(){
-    return Steps.find({task: this._id}).count()
+    return Steps.find({task: this._id}).count();
   },
   finishedSteps: function(){
-    return Steps.find({task: this._id, isFinished: true}).count()
+    return Steps.find({task: this._id, isFinished: true}).count();
   },
   progressSteps: function(){
     var total, finished, progress;
@@ -198,7 +198,7 @@ Template.stepList.helpers({
   },
   steps: function(){
     if(Session.get("task_id")){
-      return Steps.find({task: Session.get("task_id")}, 
+      return Steps.find({task: Session.get("task_id")}
       //{sort: {isFinished: 1}}
     )}
   }
@@ -209,6 +209,11 @@ Template.stepList.helpers({
 // Template.projectList.rendered = function() {
 //   AnimatedEach.attachHooks(this.find(".list-group"));
 // };
+
+Template.projectList.rendered = function() {
+  Session.set("project_id", false);
+  Session.set("task_id", false);
+};
 
 
 Meteor.Spinner.options = {

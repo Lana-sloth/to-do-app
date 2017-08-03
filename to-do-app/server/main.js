@@ -4,15 +4,15 @@ Meteor.startup(() => {
 });
 
 Meteor.publish("projects", function(){
-  return Projects.find({owner: Meteor.user()._id});
+  return Projects.find();
 })
 
 Meteor.publish("tasks", function(){
-  return Tasks.find({owner: Meteor.user()._id});
+  return Tasks.find();
 })
 
 Meteor.publish("steps", function(){
-  return Steps.find({owner: Meteor.user()._id});
+  return Steps.find();
 })
 
 ///////////////////
